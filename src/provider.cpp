@@ -25,7 +25,8 @@ extern "C" DWORD APIENTRY OpenPerfData(LPWSTR pContext)
 
 	if (g_OpenCount > 1)
 	{
-		goto cleanup;
+		//goto cleanup;
+		return rc;
 	}
 
 	// Retrieve the application specific context data
@@ -44,8 +45,9 @@ extern "C" DWORD APIENTRY OpenPerfData(LPWSTR pContext)
 	rc = g_PerfData.OpenSharedMemory(PerfDataName, false);
 	if (ERROR_SUCCESS != rc)
 	{
-		rc = ERROR_SUCCESS;
-		goto cleanup;
+		//rc = ERROR_SUCCESS;
+		//goto cleanup;
+		return ERROR_SUCCESS;
 	}
 	
 	// Retrieve the starting index values for your counters and help strings. You add 
@@ -72,8 +74,9 @@ extern "C" DWORD APIENTRY OpenPerfData(LPWSTR pContext)
 		// Counters value to your Performance key to disable your provider.
 		// Consider logging an event and returning success instead of failing.
 
-		rc = ERROR_SUCCESS;
-		goto cleanup;
+		//rc = ERROR_SUCCESS;
+		return ERROR_SUCCESS;
+		//goto cleanup;
 	}
 
 	// Initialize the Peer object. This is a multiple instance object. You cannot 
@@ -106,9 +109,7 @@ extern "C" DWORD APIENTRY OpenPerfData(LPWSTR pContext)
 	
 	InterlockedIncrement(&g_OpenCount);  // Decremented in ClosePerfData
 
-cleanup:
-
-	return rc;
+	return ERROR_SUCCESS;
 }
 
 // Callback that the performance service calls when the consumer wants to sample

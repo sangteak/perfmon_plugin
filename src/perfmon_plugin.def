@@ -1,0 +1,6 @@
+LIBRARY    "perfmon_plugin"
+
+EXPORTS
+    OpenPerfData    @1
+    CollectPerfData    @2
+    ClosePerfData    @3

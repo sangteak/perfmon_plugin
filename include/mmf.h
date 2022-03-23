@@ -19,7 +19,7 @@ public:
 
 	inline bool IsReadOnly() { return m_isReadOnly; }
 
-	DWORD OpenSharedMemory(const std::wstring& name, bool isReadOnly = true)
+	DWORD OpenSharedMemory(const wchar_t* name, bool isReadOnly = true)
 	{
 		m_isReadOnly = isReadOnly;
 
@@ -55,7 +55,7 @@ public:
 	}
 
 private:
-	DWORD Create(const std::wstring& name)
+	DWORD Create(const wchar_t* name)
 	{
 		auto protect = PAGE_READWRITE;
 		if (true == m_isReadOnly)
@@ -63,7 +63,7 @@ private:
 			protect = PAGE_READONLY;
 		}
 
-		m_handle = CreateFileMapping(INVALID_HANDLE_VALUE, nullptr, protect, 0, 1024, name.c_str());
+		m_handle = CreateFileMapping(INVALID_HANDLE_VALUE, nullptr, protect, 0, 1024, name);
 
 		auto status = GetLastError();
 
